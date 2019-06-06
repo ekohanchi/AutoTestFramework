@@ -1,0 +1,2 @@
+# AutoTestFramework
+A customizable functional &amp; performance java automated testing framework for testing web (including network traffic) &amp; api services along with integration to AWS services and different databases. Framework also supports specifying configuration key value pairs in a config.properties file (located in the resources folder). Secrets can be encrypted and stored in the config.properties file and will be decrypted in memory at runtime
