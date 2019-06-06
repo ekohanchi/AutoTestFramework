@@ -1,0 +1,31 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Test Suite for Tech Project" parallel="methods"
+	thread-count="1">
+
+	<parameter name="Environment" value="${env}"/>
+
+	<test name="Tests">
+
+		<!-- Enter group name for specific test scripts -->
+		<groups>
+			<run>
+				<include name="smoke" />
+			</run>
+		</groups>
+
+		<!-- Add individual packages you wanted to execute below -->
+		<packages>
+			<package name="com.project.test.tech.*" />
+		</packages>
+
+		<!-- Add individual classes you wanted to execute below -->
+		<classes>
+			<!-- <class name="com.project.test.TestClass" /> -->
+		</classes>
+	</test>
+
+	<listeners>
+
+	</listeners>
+
+</suite>

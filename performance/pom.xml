@@ -1,0 +1,104 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.project.test.autoTestFramework</groupId>
+	<artifactId>autoTestPerformance</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+	<name>AutoTestFramework - Performance Test Script</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<jmeter.maven.plugin>2.9.0</jmeter.maven.plugin>
+		<properties.maven.plugin>1.0.0</properties.maven.plugin>
+		<jmeter.file>SearchEngines_LoadTest.jmx</jmeter.file>
+		<!-- This value should always be overwritten from command line -->
+		<env>local</env>
+		<elastic.index>tech</elastic.index>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy.MM.dd</maven.build.timestamp.format>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>${properties.maven.plugin}</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>src/test/resources/conf/common.properties</file>
+								<file>src/test/resources/conf/${env}.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>${jmeter.maven.plugin}</version>
+				<executions>
+					<execution>
+						<id>jmeter-tests</id>
+						<!-- <phase>verify</phase> -->
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
+					</execution>
+					<!-- Fail build on errors in test -->
+					<execution>
+						<id>jmeter-check-results</id>
+						<goals>
+							<goal>results</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<generateReports>true</generateReports>
+					<propertiesUser>
+						<threads>${main.threads}</threads>
+						<loop>${main.loop}</loop>
+						<env>${env}</env>
+						<!-- Properties defined in {env} and common properties file -->
+						<rampup>${rampup}</rampup>
+						<url_protocall>${url.protocall}</url_protocall>
+						<url_searchengine1>${url.searchengine1}</url_searchengine1>
+						<url_searchengine2>${url.searchengine2}</url_searchengine2>
+						<url_searchengine3>${url.searchengine3}</url_searchengine3>
+						<url_searchengine4>${url.searchengine4}</url_searchengine4>
+						<!-- Elastic Search Properties -->
+						<esscheme>${elastic.scheme}</esscheme>
+						<eshost>${elastic.host}</eshost>
+						<esport>${elastic.port}</esport>
+						<esindex>${elastic.index}-${timestamp}</esindex>
+					</propertiesUser>
+					<jmeterExtensions>
+						<artifacts>io.github.delirius325:jmeter.backendlistener.elasticsearch:2.4.3</artifacts>
+						<artifacts>kg.apc:jmeter-plugins-casutg:2.8</artifacts>
+					</jmeterExtensions>
+					<testFilesIncluded>
+						<jMeterTestFile>${jmeter.file}</jMeterTestFile>
+					</testFilesIncluded>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
