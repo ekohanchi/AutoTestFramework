@@ -63,7 +63,7 @@ public class SQS {
 	public void sendMessageRequest(String queueUrl, String messageBody, int delaySeconds) {
 		Map<String, MessageAttributeValue> messageAttributes = new HashMap<>();
 		messageAttributes.put("AttributeOne",
-				new MessageAttributeValue().withStringValue("AutoTests for Omni AutoPilot").withDataType("String"));
+				new MessageAttributeValue().withStringValue("AutoTests for Tech Project").withDataType("String"));
 
 		SendMessageRequest sendMessageRequest = new SendMessageRequest().withQueueUrl(queueUrl)
 				.withMessageBody(messageBody).withDelaySeconds(delaySeconds).withMessageAttributes(messageAttributes);
