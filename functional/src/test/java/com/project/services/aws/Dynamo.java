@@ -16,12 +16,10 @@ import com.project.core.AppLib;
 
 public class Dynamo {
 	protected String environment = ""; 
-	
 	private Regions clientRegion = Regions.US_WEST_2;
 	private AmazonDynamoDB dynamoDBClient = null;
 	private DynamoDB dynamoDB = null;
 	private String tableName = "sandbox.demo";
-	
 	private static String PRIMARYKEY = "ID";
 	
 	public Dynamo(String env) {
